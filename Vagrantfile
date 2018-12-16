@@ -13,4 +13,12 @@ Vagrant.configure("2") do |config|
     export GOPATH=/opt/src/gocode
     go get -u github.com/go-debos/debos/cmd/debos
   SHELL
+
+  config.vm.provision :build_example, type: :shell, inline: <<-SHELL
+    export GOPATH=/opt/src/gocode
+    export GOBIN="${GOPATH}/bin"
+    export PATH="$(go env GOBIN):$PATH"
+
+    debos /vagrant/example.yaml
+  SHELL
 end
