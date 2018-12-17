@@ -1,2 +1,15 @@
 * debos-eval
 Evaluation environment for debos - Debian OS images builder
+
+** Getting started
+
+*** Prerequisites
+
+- Virtualisation provider, e.g. [[https://www.virtualbox.org][VirtualBox]]
+- [[https://www.vagrantup.com][Vagrant]]
+
+*** Running
+
+#+BEGIN_SRC sh
+vagrant up
+#+END_SRC
