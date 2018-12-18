@@ -6,9 +6,13 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :dependencies, type: :shell, inline: <<-SHELL
     export DEBIAN_FRONTEND=noninteractive
+    echo "deb http://httpredir.debian.org/debian stretch-backports main non-free" \
+        > /etc/apt/sources.list.d/backports.list
+
     apt-get update
+    apt-get -t stretch-backports install -y debootstrap
     apt-get install -y golang git libglib2.0-dev libostree-dev qemu-system-x86 \
-        qemu-user-static debootstrap systemd-container
+        qemu-user-static systemd-container
 
     export GOPATH=/opt/src/gocode
     go get -u github.com/go-debos/debos/cmd/debos
