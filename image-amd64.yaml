@@ -1,0 +1,64 @@
+architecture: amd64
+actions:
+  - action: unpack
+    file: ospack-amd64.tar.gz
+    compression: gz
+
+  - action: apt
+    recommends: false
+    packages:
+      - linux-image-generic
+
+  - action: run
+    chroot: true
+    command: echo console=ttyS0,115200 > /etc/kernel/cmdline
+
+  - action: image-partition
+    imagename: "apertis-amd64.img"
+    imagesize: 4G
+    partitiontype: gpt
+    mountpoints:
+      - mountpoint: /
+        partition: root
+      - mountpoint: /boot/efi
+        partition: EFI
+        options: [ x-systemd.automount ]
+      - mountpoint: /home
+        partition: home
+    partitions:
+      - name: EFI
+        fs: fat32
+        start: 6176s
+        end: 256M
+        flags: [ boot ]
+      - name: root
+        fs: ext4
+        start: 256M
+        end: 2G
+      - name: home
+        fs: ext4
+        start: 2G
+        end:  100%
+
+  - action: filesystem-deploy
+    description: Deploying filesystem onto image
+
+  - action: run
+    chroot: true
+    command: bootctl install
+
+  - action: run
+    chroot: true
+    command: kernel-install add 4.4.0-78-generic /boot/vmlinuz-4.4.0-78-generic
+
+  - action: run
+    postprocess: true
+    command: bmaptool create test.img > test.img.bmap
+
+  - action: run
+    postprocess: true
+    command: qemu-img convert -O vdi test.img test.img.vdi
+
+  - action: run
+    postprocess: true
+    command: gzip -f test.img
