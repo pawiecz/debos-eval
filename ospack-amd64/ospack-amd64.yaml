@@ -2,10 +2,10 @@ architecture: amd64
 
 actions:
   - action: debootstrap
-    suite: "17.06"
+    suite: "buster"
     components:
-      - target
-    mirror: https://repositories.apertis.org/apertis
+      - main
+    mirror: https://deb.debian.org/debian
     variant: minbase
 
   - action: apt
