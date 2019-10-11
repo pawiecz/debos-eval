@@ -14,7 +14,7 @@ actions:
   - action: apt
     recommends: false
     packages:
-      - linux-image-generic
+      - linux-image-amd64
 
   - action: run
     chroot: true
@@ -71,7 +71,7 @@ actions:
 
   - action: run
     chroot: true
-    command: kernel-install add 4.4.0-78-generic /boot/vmlinuz-4.4.0-78-generic
+    command: kernel-install add 4.19.0-6-amd64 /boot/vmlinuz-4.19.0-6-amd64
 
   - action: run
     postprocess: true
