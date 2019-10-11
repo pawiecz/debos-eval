@@ -1,8 +1,15 @@
 architecture: amd64
+
 actions:
-  - action: unpack
-    file: ospack-amd64.tar.gz
-    compression: gz
+  - action: debootstrap
+    suite: "buster"
+    components:
+      - main
+    mirror: https://deb.debian.org/debian
+    variant: minbase
+
+  - action: apt
+    packages: [ sudo, openssh-server, adduser ]
 
   - action: apt
     recommends: false
@@ -12,6 +19,21 @@ actions:
   - action: run
     chroot: true
     command: echo console=ttyS0,115200 > /etc/kernel/cmdline
+
+  - action: run
+    chroot: true
+    script: setup-user.sh
+
+  - action: run
+    chroot: true
+    command: echo apertis > /etc/hostname
+
+  - action: overlay
+    source: networkd
+
+  - action: run
+    chroot: true
+    script: setup-networking.sh
 
   - action: image-partition
     imagename: "apertis-amd64.img"
