@@ -9,7 +9,7 @@ actions:
     variant: minbase
 
   - action: apt
-    packages: [ sudo, openssh-server, adduser ]
+    packages: [ sudo, openssh-server, adduser, systemd-sysv ]
 
   - action: apt
     recommends: false
