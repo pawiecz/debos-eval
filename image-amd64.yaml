@@ -26,7 +26,7 @@ actions:
 
   - action: run
     chroot: true
-    command: echo apertis > /etc/hostname
+    command: echo buster > /etc/hostname
 
   - action: overlay
     source: networkd
@@ -36,7 +36,7 @@ actions:
     script: setup-networking.sh
 
   - action: image-partition
-    imagename: "apertis-amd64.img"
+    imagename: "buster-amd64.img"
     imagesize: 4G
     partitiontype: gpt
     mountpoints:
@@ -75,12 +75,12 @@ actions:
 
   - action: run
     postprocess: true
-    command: bmaptool create test.img > test.img.bmap
+    command: bmaptool create buster-amd64.img > buster-amd64.img.bmap
 
   - action: run
     postprocess: true
-    command: qemu-img convert -O vdi test.img test.img.vdi
+    command: qemu-img convert -O vdi buster-amd64.img buster-amd64.img.vdi
 
   - action: run
     postprocess: true
-    command: gzip -f test.img
+    command: gzip -f buster-amd64.img
