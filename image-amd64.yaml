@@ -75,12 +75,4 @@ actions:
 
   - action: run
     postprocess: true
-    command: bmaptool create buster-amd64.img > buster-amd64.img.bmap
-
-  - action: run
-    postprocess: true
-    command: qemu-img convert -O vdi buster-amd64.img buster-amd64.img.vdi
-
-  - action: run
-    postprocess: true
     command: gzip -f buster-amd64.img
